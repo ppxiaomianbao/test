@@ -1,5 +1,10 @@
 package com.concurrent.demo.java8_TEST;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 /**
  * @ProjectName: demo
  * @Package: com.concurrent.demo.java8_TEST
@@ -11,7 +16,7 @@ package com.concurrent.demo.java8_TEST;
  */
 public class ConverterTest {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, ClassNotFoundException, InstantiationException {
         //todo 两个测试例子的参数类型不同，返回值也不同
         Converter<Integer,String> converterInteger = ((from) -> Math.abs(from) + "");
         Converter<String,Double> converterString = ((from) -> Math.ceil(Double.valueOf(from)));
@@ -38,13 +43,30 @@ public class ConverterTest {
 
         // todo============= 让我们看看如何使用::关键字引用构造函数。首先我们定义一个示例bean，包含不同的构造方法：
 
-        PersonFactory<Person> personFactory = test::new;
+        Class<test> aClass = (Class<test>) Class.forName("com.concurrent.demo.java8_TEST.test");
+        Constructor<test> constructor = aClass.getConstructor();
+        test test = constructor.newInstance();
+        System.out.println("test : " + test.getClass().getSimpleName());
+        PersonFactory<Person> personFactory = Person::new;
         Person person = personFactory.create("名称", "性别");
         System.out.println(person.getClass());
+        Class clazz = person.getClass();
+        Field[] declaredFields = clazz.getDeclaredFields();
+        for(Field fiel : declaredFields){
+            String name = fiel.getName();
+            name = name.substring(0,1).toUpperCase() + name.substring(1);
+            name = "get" + name;
+            Method method = clazz.getMethod(name);
+            Object invoke = method.invoke(person);
+            System.err.println("class : " + name + "   invoke : " + invoke);
+
+        }
         person.showInfo();
 
         Person pp = new test();
         System.err.println(pp.getClass());
+
+        System.out.println(Thread.currentThread());
 
     }
 
@@ -58,12 +80,27 @@ class SomeThing{
 
 
 
-
-abstract class Person{
+ class Person{
     private String name;
     private String sex;
 
-    public Person() {
+     public String getName() {
+         return name;
+     }
+
+     public void setName(String name) {
+         this.name = name;
+     }
+
+     public String getSex() {
+         return sex;
+     }
+
+     public void setSex(String sex) {
+         this.sex = sex;
+     }
+
+     public Person() {
     }
 
     public Person(String name, String sex) {
@@ -98,6 +135,7 @@ class test extends Person{
     }*/
 }
 
+@FunctionalInterface
 interface PersonFactory<P extends Person>{
     P create(String name,String sex);
 }

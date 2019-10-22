@@ -38,5 +38,6 @@ public interface Formula {
         };
         System.out.println("formula -- sqrt " + formula.sqrt(100));
         System.out.println("formula -- calulate " + formula.calulate(10));
+
     }
 }
