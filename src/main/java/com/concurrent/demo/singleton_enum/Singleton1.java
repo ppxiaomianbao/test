@@ -1,5 +1,7 @@
 package com.concurrent.demo.singleton_enum;
 
+import java.net.StandardSocketOptions;
+
 /**
  * @ProjectName: demo
  * @Package: com.concurrent.demo.singleton_enum
@@ -10,10 +12,21 @@ package com.concurrent.demo.singleton_enum;
  * @Version: 1.0
  */
 public class Singleton1 {
-    private final static Singleton1 singleton1 = null;
+    private static Singleton1 singleton1 = null;
 
     private Singleton1(){
 
+    }
+
+    public static Singleton1 getSingleton() {
+        if (singleton1 == null) {
+            synchronized (Singleton1.class) {
+                if (singleton1 == null) {
+                    singleton1 = new Singleton1();
+                }
+            }
+        }
+        return singleton1;
     }
 
     public static Singleton1 getInstance(){

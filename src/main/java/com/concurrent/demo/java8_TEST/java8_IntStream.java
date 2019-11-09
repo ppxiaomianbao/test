@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.OptionalInt;
+import java.util.function.IntBinaryOperator;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -51,6 +52,7 @@ public class java8_IntStream {
         String[] strings = collect.toArray(new String[collect.size()]);
         System.out.println("array :" + Arrays.toString(strings));
         System.out.println("list : " + collect);
+
     }
 
     //todo java8 中运用基本类型流对象替换for循环
@@ -101,7 +103,7 @@ public class java8_IntStream {
         }).anyMatch(x -> {
             System.out.println("anymatch : " + x);
             return x.startsWith("B");
-        }); //todo 可以看到找到了符合的就停止了执行，不需要全都遍历一遍
+        });//todo 可以看到找到了符合的就停止了执行，不需要全都遍历一遍
         System.out.println("a".equalsIgnoreCase("A")); //忽略大小写的判断
 
         System.err.println("==================顺序的重要性====================");

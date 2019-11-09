@@ -37,9 +37,5 @@ public class java8_Predicates {
         Predicate<String> predicateisEmpty = String::isEmpty;
         boolean isEmpty = predicateisNull.apply("");
         System.out.println("判断字符串是否不存在：" + isEmpty);
-
-
-
-
     }
 }

@@ -36,7 +36,11 @@ public class java8_High_Stream {
 
         //todo 因为流不能复用，所以用这种方法来获取同一个数据流
         Supplier<Stream<Person>> supplier = () -> people.stream();
+        System.err.println("===============================================================");
         test_average(supplier);
+        System.err.println("===============================================================");
+        test(supplier);
+        System.err.println("===============================================================");
     }
 
     /**
@@ -54,12 +58,18 @@ public class java8_High_Stream {
         Double average = supplier.get().collect(Collectors.averagingDouble(x -> x.getAge()));
         System.out.println("test_average: " + average);
 
+        //一次获取最大值，最小值，平均值，总和，和数据个数
         IntSummaryStatistics collect = supplier.get().collect(Collectors.summarizingInt(x -> x.getAge()));
         System.out.println("test_average1: " + collect);
 
         //将所有人链接为一个字符串，没有参数就直接链接，三个参数表示任意两个对象用什么分隔，前缀和后缀
         String collect1 = supplier.get().map(x -> x.getName()).collect(Collectors.joining(" and ", "test", "or"));
         System.out.println("test_average2: " + collect1);
+    }
+
+    public static void test(Supplier<Stream<Person>> supplier) {
+        String s = supplier.get().map(x -> x.getName()).collect(Collectors.joining(" | ")).toUpperCase().toString();
+        System.out.println(s);
     }
 }
 

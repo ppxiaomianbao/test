@@ -4,13 +4,17 @@ import com.concurrent.demo.configs.HttpFilter;
 import com.concurrent.demo.configs.ThreadInterceptor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 @SpringBootApplication
 public class DemoApplication  extends WebMvcConfigurationSupport {
+
 
     public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class, args);
@@ -28,6 +32,7 @@ public class DemoApplication  extends WebMvcConfigurationSupport {
      */
     @Bean
     public FilterRegistrationBean getRegistrationBean(){
+
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         //设置自定义过滤器
         registrationBean.setFilter(getHttpFilter());

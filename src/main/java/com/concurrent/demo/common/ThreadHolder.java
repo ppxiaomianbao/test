@@ -1,6 +1,5 @@
 package com.concurrent.demo.common;
 
-import org.springframework.stereotype.Component;
 
 /**
  * @ProjectName: con_demo

@@ -6,6 +6,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * @ProjectName: demo
@@ -19,6 +22,19 @@ import java.util.List;
 public class Lambda_sort {
 
     public static void main(String[] args) {
+        Integer[] integers = IntStream.of(1, 6, 5, 3, 4).boxed().sorted(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                if (o1 > o2) {
+                    return -1;
+                } else if (o1 < o2) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        }).collect(Collectors.toList()).toArray(new Integer[0]);
+        System.err.println(Arrays.toString(integers));
         List<String> list = Arrays.asList("abC", "abF", "abH", "abD");
         System.out.println("sort -- start " + list);
         //list = java8_Start(list);
